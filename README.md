@@ -59,24 +59,43 @@ Also required for local runs: `model_base_url` must be an `https://` URL on a **
 name** (an IP is rejected), and the real address goes on the command line with
 `--model-base-url`. `env` values are literal — `{src}` is not expanded there.
 
-## Finishing this entry
+## Finishing this entry — one command
 
 Access to `google/physical-engineerings-last-exam` is gated; it must be requested once
-while signed in on Hugging Face. After that, three commands finish everything:
+while signed in on Hugging Face. After that:
 
 ```bash
-export HF_TOKEN=...                      # token of the account that was granted access
-python eval/run.py .                     # runs the 29 dev tasks, writes artifacts/
-python -m kit check .                    # must be all PASS
-git add -A && git commit -m "dev artifacts" && git push
+bash finish.sh          # runs in WSL as root, from the kit checkout
 ```
 
-Then set `model_api` to the sponsored model of choice (this file already ships
-`google-cloud/claude-opus-5-5`), re-commit, and submit that commit SHA.
+`finish.sh` does the whole remaining job and is safe to re-run:
 
-Switching `model_api` from a local model to a `google-cloud/<id>` model *after*
-generating `artifacts/` locally is explicitly allowed by the rules, provided the local
-model and judge setup are documented in the writeup.
+1. verifies HF dataset access, Ollama and Docker,
+2. copies the entry to `/root/entry-dev` and switches it to a self-hosted model — the
+   rules explicitly allow generating `artifacts/` with a local open-weight model,
+3. runs `eval/run.py` over the 29 dev tasks,
+4. requires `kit check` to be green,
+5. copies `artifacts/` back, switches `submission.yaml` to
+   `google-cloud/claude-opus-5-5`, commits and pushes,
+6. prints the 40-character commit SHA for the submission form.
+
+Without step 2's model switch the run would need a Vertex AI proxy; with it, the dev
+run costs nothing but time. Switching `model_api` to a `google-cloud/<id>` model *after*
+generating `artifacts/` locally is explicitly permitted, provided the local model and
+judge setup are documented in the writeup — which they are, in `docs/writeup.md`.
+
+After `finish.sh`, the only manual work left is on Kaggle: paste the SHA into the
+writeup, upload the cover and the three figures to the media gallery, submit.
+
+## Documents
+
+| File | What it is |
+|---|---|
+| `docs/writeup.md` | the Stage-1 writeup (1,478 words, covers all five rubric criteria) |
+| `docs/figure0-cover.png` | media-gallery cover |
+| `docs/figure1-architecture.png` | harness loop with the two gates |
+| `docs/figure2-score-vs-cost.png` | score vs. tool calls, r = −0.30 |
+| `docs/figure3-failure-breakdown.png` | the four zeros split into two classes |
 
 ## Why the analysis that accompanies this harness matters more than the harness
 
