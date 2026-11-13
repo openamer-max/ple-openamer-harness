@@ -1,7 +1,7 @@
 # Two of the four zero scores never wrote a file
 
 **Repo:** https://github.com/openamer-max/ple-openamer-harness ·
-**Commit:** `d6fa3aef22cbde6f3a8f15aba353b766e698210b`
+**Commit:** `989956792ef743d8aeea7c1626a826b88f012742` *(provisional — a writeup cannot cite the commit that contains it; `finish.sh` prints the final SHA of the artifact commit and that is the one to submit)*
 
 > **Status note, stated up front because the rules require it:** the harness is complete
 > and passes the kit (`kit check`, exit 0), but the repository contains **no `artifacts/`
