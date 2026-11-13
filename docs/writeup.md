@@ -64,11 +64,31 @@ script** from **seven PNG drawing sheets and nothing else**. The agent delivered
 grader rejected the artifact. 120 further steps did not repair it, because nothing in
 the loop tested validity.
 
-**Failed ideas.** We tried, and abandoned, two interpretations of our own:
+**Failed ideas.** We tried, and abandoned, three interpretations of our own:
 (a) that late submission explains the zeros — it does not, the two perfect scores sit at
 step 6 of 39 (15 %) and step 58 of 69 (84 %);
 (b) that the failures are domain-knowledge gaps — section 3 shows the harness solving a
-cable-sizing task at 0.907 with textbook method.
+cable-sizing task at 0.907 with textbook method;
+(c) that *self-declared* assumptions predict failure. We counted assumption and
+approximation markers in agent-authored text only (never in the task prompt) and
+correlated them with reward: **r = +0.05 over 29 tasks — no signal.** Agents declare
+assumptions at every score level. Transparency is not correctness.
+
+That null result produced a sharper finding. `seismic-diaphragm-shear` (0.316) wrote:
+
+> "Feasible design found under conservative assumptions (total ≈ $347k < $395k cap).
+> Now let me write the package generator to get a complete first deliverable on disk."
+
+A complete package, produced early, from an unverified assumption — and 0.316.
+`frame-extension-method` (0.806) went further and admitted inventing a name: *"R.
+Castellan, P.E. is a placeholder I invented, so put the real designer's name in before
+issue."* Both tasks materialised; the difference is whether the declared assumption was
+checked against the corpus.
+
+**This is why A1 and A2 must ship together.** Enforcing early materialisation alone
+converts class-A failures into class-B failures: a complete artifact built on an
+unverified assumption satisfies the first gate and fails the second. A1 without A2 is
+not a fix, it is a reshuffle.
 
 **Taxonomy.** (1) no deliverable (2/29); (2) invalid artifact (2/29); (3) drawing
 comprehension from raster sheets alone (≥4/29, including both MEP tasks); (4) code-clause
@@ -79,8 +99,8 @@ carry no grader feedback per criterion, and keyword counts measure mentions, not
 
 | # | Harness change | Predicted effect | Measurement |
 |---|---|---|---|
-| A1 | First-version mandate: a schema-complete file at the deliverable path by 25 % of budget | both class-A tasks leave 0.000; empty `files/` goes 2/29 → 0/29 | per-task reward; count of empty `files/` |
-| A2 | Self-validation gate: parse and check the artifact against the stated schema before each submission attempt | both class-B tasks leave 0.000 | per-task reward; count of "file present, reward 0" |
+| A1 | First-version mandate: a schema-complete file at the deliverable path by 25 % of budget. **Only valid together with A2** (see above). | both class-A tasks leave 0.000; empty `files/` goes 2/29 → 0/29 | per-task reward; count of empty `files/` |
+| A2 | Self-validation gate: parse and check the artifact against the stated schema before each submission attempt | both class-B tasks leave 0.000; blocks the premature-complete artifact seen at 0.316 | per-task reward; count of "file present, reward 0" |
 | A3 | Discovery time-box: cap service/document exploration at 25 % of budget, then force a scaffold | `solar-witness-test-package` runs past step 22 and delivers | steps to termination; reward |
 
 ## 3. Engineering reasoning on a concrete task (criterion 2)
