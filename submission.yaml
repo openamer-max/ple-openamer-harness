@@ -1,0 +1,7 @@
+name: openamer-harness
+model_api: google-cloud/claude-opus-5-5
+install: >-
+  npm ci --prefix {src} --no-fund --no-audit
+  && uv venv --python 3.12 /opt/harness/venv
+  && uv pip install --python /opt/harness/venv/bin/python -r {src}/requirements.txt
+serve: /opt/harness/venv/bin/python {src}/serve.py
